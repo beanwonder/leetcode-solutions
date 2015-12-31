@@ -1,5 +1,6 @@
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 using namespace std;
 
 class Solution {
@@ -29,4 +30,27 @@ public:
         }
         return indexs;
     }
+
+    vector<int> twoSum_sorted(vector<int> &numbers, int target) {
+        // if array is sorted, via greedy algorithm
+        // similar: 11. Container With Most Water
+        // but index sensitive could not be used in two sum problem
+        std::vector<int> indexes(2);
+        int i = 0, j = numbers.size() - 1;
+        while (i < j) {
+            int sum = numbers[i] + numbers[j];
+            if (sum == target) {
+                indexes[0] = i + 1;
+                indexes[1] = j + 1;
+                break;
+            } else if (sum < target) {
+                i += 1;
+            } else {
+                // sum > target
+                j -= 1;
+            }
+        }
+        return indexes;
+    }
+
 };
