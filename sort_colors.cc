@@ -3,20 +3,48 @@ using namespace std;
 
 class Solution {
 public:
-    int maxSubArray(vector<int>& nums) {
-        int size = nums.size();
-        std::vector<int> memo(size);
-        // dp OPT(i) max subarray sum ending with nums[i]
-        // OPT(i) = max (nums[i], nums[i] + OPT(i-1))
-        // base case
-        memo[0] = nums[0];
-        int max = memo[0];
-        for (int i = 1; i < size; i++) {
-            memo[i] = memo[i-1] < 0 ? nums[i]: nums[i] + memo[i-1];
-            if (memo[i] > max) {
-                max = memo[i];
+    void sortColors(vector<int>& nums) {
+        // 1 by sort (quick sort)
+        // because of only 0 1 2, 1 is the pivotal
+        int sz = nums.size();
+        int left = 0;
+        int right = sz - 1;
+
+        int pivot = 1;
+        exchange(nums, pivot, left, right);
+
+        if (left == right) {
+            if (nums[right] > pivot) {
+                right = right - 1;
+            }
+            left = 0;
+        } else if (left > right) {
+            right = left;
+            left = 0;
+        }
+
+        pivot = 0;
+        exchange(nums, pivot, left, right);
+    }
+
+    void exchange(vector<int>& nums, int pivt, int& left, int& right) {
+        // left and right must be return to outside
+        // <= pivt | > than pivt
+        while (left < right) {
+            if (nums[left] > pivt && nums[right] <= pivt) {
+                // exchange
+                nums[left] ^= nums[right];
+                nums[right] ^= nums[left];
+                nums[left] ^= nums[right];
+                left += 1;
+                right -= 1;
+            }
+            if (nums[left] <= pivt) {
+                left += 1;
+            }
+            if (nums[right] > pivt) {
+                right -= 1;
             }
         }
-        return max;
     }
 };
