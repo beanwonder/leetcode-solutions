@@ -53,44 +53,46 @@ public:
         return head;
     }
 
-    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-        ListNode *l3 = NULL;
+
+    ListNode* mergeTwoLists(ListNode *l1, ListNode *l2) {
         ListNode *head = NULL;
+        ListNode *cur = NULL;
         if (l1 != NULL && l2 != NULL) {
-            if (l1->val <= l2->val) {
+            if (l1->val < l2->val) {
                 head = l1;
+                cur = l1;
                 l1 = l1->next;
             } else {
                 head = l2;
+                cur = l2;
                 l2 = l2->next;
             }
-        } else if (l1 != NULL) {
-            head = l1;
-            l1 = l1->next;
-        } else if (l2 != NULL) {
+        } else if (l1 == NULL) {
             head = l2;
-            l2 = l2->next;
-        } else {
-            return head;
-        }    
-        l3 = head;
+            l2 = NULL;
+        } else if (l2 == NULL) {
+            head = l1;
+            l1 = NULL;
+        }
+        
         while (l1 != NULL || l2 != NULL) {
+            // l1 and l2 are not NULL both
             if (l1 != NULL && l2 != NULL) {
-                if (l1->val <= l2->val) {
-                    l3->next = l1;
-                    l3 = l3->next;
+                if (l1->val < l2->val) {
+                    cur->next = l1;
+                    cur = l1;
                     l1 = l1->next;
                 } else {
-                    l3->next = l2;
-                    l3 = l3->next;
+                    cur->next = l2;
+                    cur = l2;
                     l2 = l2->next;
                 }
-            } else if (l1 != NULL && l2 == NULL) {
-                l3->next = l1;
-                break;
-            } else {
-                l3->next = l2;
-                break;
+            } else if (l1 == NULL) {
+                cur->next = l2;
+                l2 = NULL;
+            } else if (l2 == NULL) {
+                cur->next = l1;
+                l1 = NULL;
             }
         }
         return head;
@@ -98,12 +100,21 @@ public:
 
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         int sz = lists.size();
-        std::vector<ListNode*> lst(sz);
-        while (sz != 1) {
+        if (sz == 0) return NULL;
+        while (sz > 1) {
             int cnt = 0;
-            for (cnt = 0; cnt+1 < sz; cnt++) {
+            for (cnt = 0; cnt < sz/2; cnt++) {
+                lists[cnt] = mergeTwoLists(lists[2*cnt], lists[2*cnt+1]);
+            }
 
+            if ((sz%2) == 1) {
+                lists[cnt] = lists[sz-1];
+                sz = sz / 2 + 1;
+            } else {
+                sz = sz / 2;
             }
         }
+        return lists[0];
     }
+
 };

@@ -47,4 +47,19 @@ public:
             }
         }
     }
+
+    void sortColors_counting_sort(vector<int>& nums) {
+            // count sort;
+        int colors[3] = {0, 0, 0};
+        for (int obj : nums) {
+            colors[obj]++;
+        }
+        
+        int cnt = 0;
+        for (int idx=0; idx < 3; idx++) {
+            for (int i=0; i<colors[idx]; i++) {
+                nums[cnt++] = idx;
+            }
+        }
+    }
 };
