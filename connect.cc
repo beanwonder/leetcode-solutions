@@ -25,7 +25,7 @@ public:
         TreeLinkNode **nextlevel = NULL;
         int clevel = 0;
         int clevelcount = 0;
-        
+
         if (root != NULL) {
             curlevel = new TreeLinkNode*;
             *curlevel = root;
