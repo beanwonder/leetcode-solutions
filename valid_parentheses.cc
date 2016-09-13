@@ -1,72 +1,49 @@
 #include <stack>
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Solution {
 public:
     bool isValid(string s) {
-        std::stack<char> par_stack;
-
-        for (string::const_iterator iter = s.begin(); iter != s.end(); ++iter) {
-            switch (*iter) {
-                case '(':
-                    par_stack.push('(');
-                    continue;
-                    break;
-                case '[':
-                    par_stack.push('[');
-                    continue;
-                    break;
-                case '{':
-                    par_stack.push('{');
-                    continue;
-                    break;
-                default: 
-                    break;
-            }
-
-            if (!par_stack.empty()) {
-                switch (*iter) {
-                    case ')':
-                        if (par_stack.top() == '(') {
-                            par_stack.pop();
-                        } else {
-                            return false;
-                        }
-                        break;
-                    case ']':
-                        if (par_stack.top() == '[') {
-                            par_stack.pop();
-                        } else {
-                            return false;
-                        } 
-                        break;
-                    case '}':
-                        if (par_stack.top() == '{') {
-                            par_stack.pop();
-                        } else {
-                            return false;
-                        } 
-                        break;
-                    default:
-                        return false;
-                        break; 
+        stack<char> aStack;
+        for (int i=0; i < s.size(); ++i) {
+            if (s[i] == '(' || s[i] == '[' || s[i] == '{' || s[i] == '<') {
+                aStack.push(s[i]);
+            } else if (s[i] == ')') {
+                if (!aStack.empty() && aStack.top() == '(') {
+                    aStack.pop();
+                } else {
+                    return false;
                 }
-            } else {
-                return false;
+            } else if (s[i] == ']') {
+                if (!aStack.empty() && aStack.top() == '[') {
+                    aStack.pop();
+                } else {
+                    return false;
+                }
+            } else if (s[i] == '}') {
+                if (!aStack.empty() && aStack.top() == '{') {
+                    aStack.pop();
+                } else {
+                    return false;
+                }
+            } else if (s[i] == '>') {
+                if (!aStack.empty() && aStack.top() == '<') {
+                    aStack.pop();
+                } else {
+                    return false;
+                }
             }
         }
-        bool result = false;
-        if (par_stack.empty()) {
-            result = true;
-        }
-        return result;
+
+        return aStack.empty();
     }
 };
 
 int main(void)
 {
     Solution s1;
-    cout << s1.isValid("()") << endl;;
+    cout << s1.isValid("(())<><{}>()(<>{{}}})") << endl;;
     return 0;
 }

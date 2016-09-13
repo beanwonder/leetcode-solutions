@@ -24,7 +24,12 @@
 .ycm_extra_conf.py
 .ycm_extra_conf.pyc
 
+
 !*.c
 !*.h
 
 .idea/*
+CMakeLists.txt
+
+# mac
+.DS_Store
