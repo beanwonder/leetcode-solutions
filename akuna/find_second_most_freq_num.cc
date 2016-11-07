@@ -12,12 +12,12 @@ using namespace std;
 class Solution {
 public:
     int find_second_most_freqent_number(vector<int> nums) {
-        map<int, int> counts;
+        map<int, int> word_count;
         for (auto n : nums) {
-            counts[n] += 1;
+            word_count[n] += 1;
         }
 
-        vector<pair<int, int>> ps(counts.begin(), counts.end());
+        vector<pair<int, int>> ps(word_count.begin(), word_count.end());
         auto cmp = [](pair<int, int> p1, pair<int, int> p2) {
             return p1.second > p2.second;
         };
