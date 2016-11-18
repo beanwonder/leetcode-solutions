@@ -17,6 +17,7 @@ public:
             word_count[n] += 1;
         }
 
+
         vector<pair<int, int>> ps(word_count.begin(), word_count.end());
         auto cmp = [](pair<int, int> p1, pair<int, int> p2) {
             return p1.second > p2.second;
