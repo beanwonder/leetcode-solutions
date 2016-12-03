@@ -29,6 +29,7 @@
 !*.h
 
 .idea/*
+cmake-build-debug/*
 CMakeLists.txt
 
 # mac
